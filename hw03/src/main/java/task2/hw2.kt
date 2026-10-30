@@ -1,41 +1,24 @@
-package com.example.hw03.task2
-open class SmartDevice(val name: String) {
-    var status = "off"
-    open fun turnOn() {
-        status = "on"
-        println("$name is ON")
-    }
-    open fun turnOff() {
-        status = "off"
-        println("$name is OFF")
-    }
-}
-class SmartTvDevice(name: String) : SmartDevice(name) {
-    var speakerVolume = 5
-        private set(value) {
-            if (value in 0..100) {
-                field = value
-            }
-        }
-    var channelNumber = 1
-    override fun turnOn() {
-        super.turnOn()
-        println("TV: display on")
-    }
-    fun increaseVolume() {
-        speakerVolume += 1
-        println("Volume: $speakerVolume")
-    }
-    fun nextChannel() {
-        channelNumber += 1
-        println("Channel: $channelNumber")
-    }
-}
-fun main() {
-    val tv = SmartTvDevice("Living Room TV")
-    tv.turnOn()
-    tv.nextChannel()
-    tv.increaseVolume()
-    tv.turnOff()
+package com.example.hw04.task2
 
+enum class SubmissionStatus(val label: String) {
+    NOT_SUBMITTED("Not submitted yet"),
+    SUBMITTED("Submitted"),
+    LATE("Late submission"),
+    GRADED("Graded")
+}
+
+fun printStatusInfo(status: SubmissionStatus) {
+    val actionMessage = when (status) {
+        SubmissionStatus.NOT_SUBMITTED -> "Please submit before the deadline."
+        SubmissionStatus.SUBMITTED -> "Waiting for grading."
+        SubmissionStatus.LATE -> "A late penalty may apply."
+        SubmissionStatus.GRADED -> "Check your score in the portal."
+    }
+    println("${status.name}: ${status.label} -> $actionMessage")
+}
+
+fun main() {
+    for (status in SubmissionStatus.entries) {
+        printStatusInfo(status)
+    }
 }

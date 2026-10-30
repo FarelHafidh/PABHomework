@@ -1,30 +1,16 @@
-package com.example.hw03.task1
-// Parent Class
-open class SmartDevice(val name: String) {
-    var status = "off"
+package com.example.hw04.task1
 
-    open fun turnOn() {
-        status = "on"
-        println("$name is ON")
-    }
+data class Book(val isbn: String, val title: String, val year: Int)
 
-    open fun turnOff() {
-        status = "off"
-        println("$name is OFF")
-    }
-}
-// Child Class
-class SmartLightDevice(name: String) : SmartDevice(name) {
-    var brightness = 50
-
-    override fun turnOn() {
-        super.turnOn()
-        println("Brightness: $brightness%")
-    }
-}
 fun main() {
-    val lamp = SmartLightDevice("Desk Lamp")
-    lamp.turnOn()
-    println("Status: ${lamp.status}")
-    lamp.turnOff()
+    val book1 = Book("978-0134494166", "Kotlin in Action", 2024)
+    val book2 = Book("978-1491956052", "Android Basics", 2023)
+
+    println(book1)
+    println(book2)
+
+    val book3 = book1.copy(year = 2026)
+    println(book3)
+
+    println(book1 == book2)
 }

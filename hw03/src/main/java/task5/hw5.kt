@@ -1,56 +1,35 @@
-package com.example.hw03.task5
-abstract class SmartDevice(val name: String) {
-    abstract fun turnOn()
-    fun showName() {
-        println(name)
-    }
-}
-interface Connectable {
-    fun connect()
-}
-interface Rechargeable {
-    fun charge()
-}
-class SmartWatch(name: String) : SmartDevice(name), Connectable, Rechargeable {
-    private var battery: Int = 50
-        set(value) {
-            field = when {
-                value < 0 -> 0
-                value > 100 -> 100
-                else -> value
-            }
-        }
-    var ownerName: String? = null
+package com.example.hw04.task5
 
-    override fun turnOn() {
-        println("$name is ON")
-    }
+enum class LetterGrade {
+    A, B, C, D, E
+}
 
-    override fun connect() {
-        println("$name connected to phone")
-    }
-    override fun charge() {
-        battery += 20
-        println("Battery: $battery%")
-    }
+data class Student(val id: Int, val name: String, val score: Int)
 
-    fun showOwner() {
-        println("Owner: ${ownerName ?: "Not set"}")
+fun Student.letterGrade(): LetterGrade {
+    return when {
+        score >= 85 -> LetterGrade.A
+        score >= 70 -> LetterGrade.B
+        score >= 55 -> LetterGrade.C
+        score >= 40 -> LetterGrade.D
+        else -> LetterGrade.E
     }
 }
 
 fun main() {
-    val watch = SmartWatch("Galaxy Watch")
+    val students = mutableListOf(
+        Student(101, "Ali", 88),
+        Student(102, "Budi", 65),
+        Student(103, "Citra", 92),
+        Student(104, "Dewi", 71)
+    )
 
-    watch.showName()
-    watch.turnOn()
-    watch.connect()
+    students.add(Student(105, "Eka", 35))
 
-    watch.charge()
-    watch.charge()
-    watch.charge()
+    students.removeAll { it.score < 40 }
 
-    watch.showOwner()
-    watch.ownerName = "Rani"
-    watch.showOwner()
+    for (student in students) {
+        val (id, name, score) = student
+        println("$id - $name - $score -> ${student.letterGrade()}")
+    }
 }
